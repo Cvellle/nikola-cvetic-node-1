@@ -11,7 +11,7 @@ const server = http.createServer((req, res) => {
   res.statusCode = 200; // OK
 
   // Types
-  //   Text, JSON, HTML, JavaScript, CSS, XML);
+  // Text, JSON, HTML, JavaScript, CSS, XML;
   res.setHeader("Content-Type", "text/plain");
 
   // Body
