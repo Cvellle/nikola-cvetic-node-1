@@ -1,5 +1,18 @@
 [
-  { "email": "marko@example.com", "password": "marko123" },
-  { "email": "ana@example.com", "password": "ana123" },
-  { "email": "petar@example.com", "password": "petar123" }
+  {
+    "email": "marko@example.com",
+    "password": "marko123"
+  },
+  {
+    "email": "ana@example.com",
+    "password": "ana123"
+  },
+  {
+    "email": "petar@example.com",
+    "password": "petar123"
+  },
+  {
+    "email": "nikola@example.com",
+    "password": "nikola123"
+  }
 ]

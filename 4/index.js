@@ -18,6 +18,23 @@ const server = http.createServer((req, res) => {
       res.end();
       return;
     }
+
+    const users = JSON.parse(
+      fs.readFileSync(__dirname + "/../data/users.json", "utf-8"),
+    );
+
+    const userExists = users.some((user) => user.email === data.email);
+
+    if (userExists) {
+      res.statusCode = 409; // Conflict - resurs vec postoji
+      res.setHeader("Content-Type", "text/plain");
+      res.end("User already exists");
+      return;
+    }
+
+    res.statusCode = 201; // Created
+    res.setHeader("Content-Type", "text/plain");
+    res.end("User created");
   });
 });
 
