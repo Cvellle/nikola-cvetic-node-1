@@ -1,9 +1,7 @@
-// sync - za neki bitan fajl (config), za manje fajlove i sl.
-// async - za html
-// async - ima i callback funkciju
-
 const http = require("http");
 const fs = require("fs");
+const path = require("path");
+
 const logUsersVisit = require("../../src/logger");
 
 const variables = {
@@ -23,7 +21,37 @@ const footer = fs.readFileSync(
 );
 
 const server = http.createServer((req, res) => {
-  fs.readFile(__dirname + "/../../html/index.html", "utf-8", (err, html) => {
+  if (req.url.startsWith("/public/js") && req.url.endsWith(".js")) {
+    const jsPath = path.join(__dirname, "/../../", req.url);
+    fs.readFile(jsPath, (err, data) => {
+      if (err) {
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("JS file not found");
+        return;
+      }
+
+      res.writeHead(200, { "Content-Type": "application/javascript" });
+      res.end(data);
+    });
+    return;
+  }
+
+  if (req.url.startsWith("/api/products")) {
+    const filePath = path.join(__dirname, "/../../data", "products.json");
+    fs.readFile(filePath, "utf-8", (err, jsonResponse) => {
+      if (err) {
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("JSON not found");
+        return;
+      }
+      console.log("jsonResponse", jsonResponse);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(jsonResponse);
+    });
+    return;
+  }
+
+  fs.readFile(__dirname + "/../../public/index.html", "utf-8", (err, html) => {
     if (err) {
       res.statusCode = 500;
       res.end("Internal server error");
@@ -35,7 +63,7 @@ const server = http.createServer((req, res) => {
       result = result.replace("{{" + key + "}}", variables[key]);
     }
 
-    // uhvatiomo ip
+    // uhvatimo ip
     // druga opcija - ako smo prosledjeni s druge stranice,
     //  nemamo x-forewarded-for
     const ip = req.headers["x-forewarded-for"] || req.socket.remoteAddress;
