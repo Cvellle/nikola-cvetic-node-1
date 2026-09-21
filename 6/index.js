@@ -15,10 +15,7 @@ const navigation = fs.readFileSync(
   __dirname + "/components/navigation.html",
   "utf-8",
 );
-const footer = fs.readFileSync(
-  __dirname + "/components/footer.html",
-  "utf-8",
-);
+const footer = fs.readFileSync(__dirname + "/components/footer.html", "utf-8");
 
 const server = http.createServer((req, res) => {
   if (req.url.startsWith("/public/js") && req.url.endsWith(".js")) {
@@ -44,9 +41,23 @@ const server = http.createServer((req, res) => {
         res.end("JSON not found");
         return;
       }
-      console.log("jsonResponse", jsonResponse);
+
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(jsonResponse);
+
+      let finalResult = [];
+      if (req.url === "/api/products/available") {
+        finalResult = JSON.parse(jsonResponse).filter(
+          (product) => product.available,
+        );
+      } else if (req.url === "/api/products/not-available") {
+        finalResult = JSON.parse(jsonResponse).filter(
+          (product) => !product.available,
+        );
+      } else {
+        finalResult = JSON.parse(jsonResponse);
+      }
+
+      return res.end(JSON.stringify(finalResult));
     });
     return;
   }
