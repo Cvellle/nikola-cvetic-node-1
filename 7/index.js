@@ -10,12 +10,7 @@ const server = http.createServer((req, res) => {
   } else if (req.url.startsWith("/api/")) {
     handleApiCall(req, res);
   } else {
-    if (req.url === "/") {
-      handlePage(req, res);
-    } else {
-      res.writeHead(404, { "Content-Type": "text/plain" });
-      res.end("Not found");
-    }
+    handlePage(req, res);
   }
 });
 
