@@ -1,12 +1,12 @@
-// event emmiters
+// event emitters
 // above the fold
 // mejl kad korisnik nesto kupi, da mu se posalje mejl
 // page loaded
-// za sta su event emmiteri bolji
+// za sta su event emiteri bolji
 
 const http = require("http");
 
-require("./src/listeners/pageListeners");
+require("./src/events/listeners");
 
 const handleStaticFiles = require("./src/handlers/staticHandler");
 const handleApiCall = require("./src/handlers/apiHandler");
