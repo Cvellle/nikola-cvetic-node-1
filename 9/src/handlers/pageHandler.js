@@ -44,7 +44,7 @@ function sendError(res) {
 // 1. renderFile(view) -> html samo za sadrzaj stranice (body)
 // 2. renderFile(layout) -> ugnjezdeno, ubacujemo body u layout (header + footer)
 function render(res, status, view, data) {
-  ejs.renderFile(path.join(viewsDir, view), data, (err, body) => {
+  ejs.renderFile(path.join(viewsDir, "pages", view), data, (err, body) => {
     if (err) {
       console.log(err);
       return sendError(res);
