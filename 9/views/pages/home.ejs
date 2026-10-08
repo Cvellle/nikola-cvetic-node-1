@@ -1,4 +1,14 @@
-<h1>Hello my name is: <%= name %></h1>
+<% if (name) { %>
+  <h1>Hello my name is: <%= name %></h1>
+<% } else { %>
+  <h1>Hello stranger</h1>
+<% } %>
+
 <p>age: <%= age %></p>
-<p>height: <%= height %></p>
-<p>weight: <%= weight %></p>
+<% if (age < 18) { %>
+  <p>You are underage.</p>
+<% } else if (age < 65) { %>
+  <p>You are an adult.</p>
+<% } else { %>
+  <p>You are a senior.</p>
+<% } %>
