@@ -2,10 +2,15 @@ const http = require("http");
 
 const handleStaticFiles = require("./src/handlers/staticHandler");
 const handleApiCall = require("./src/handlers/apiHandler");
-const handlePage = require("./src/handlers/pageHandler");
+const { handlePage, handleProduct } = require("./src/handlers/pageHandler");
 
 const server = http.createServer((req, res) => {
-  if (req.url.startsWith("/public/")) {
+  // /product/product-1 -> slug = "product-1"
+  const productMatch = req.url.match(/^\/product\/([\w-]+)$/);
+
+  if (productMatch) {
+    handleProduct(req, res, productMatch[1]);
+  } else if (req.url.startsWith("/public/")) {
     handleStaticFiles(req, res);
   } else if (req.url.startsWith("/api/")) {
     handleApiCall(req, res);

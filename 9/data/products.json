@@ -1,26 +1,8 @@
 [
-    {
-        "name": "product 1",
-        "available": true
-    },
-    {
-        "name": "product 2",
-        "available": true
-    },
-    {
-        "name": "product 3",
-        "available": false
-    },
-    {
-        "name": "product 4",
-        "available": true
-    },
-    {
-        "name": "product 5",
-        "available": false
-    },
-    {
-        "name": "product 6",
-        "available": true
-    }
+  { "slug": "product-1", "name": "product 1", "available": true, "amount": 12, "price": 199.99 },
+  { "slug": "product-2", "name": "product 2", "available": true, "amount": 3, "price": 49.5 },
+  { "slug": "product-3", "name": "product 3", "available": false, "amount": 0, "price": 120 },
+  { "slug": "product-4", "name": "product 4", "available": true, "amount": 25, "price": 9.99 },
+  { "slug": "product-5", "name": "product 5", "available": false, "amount": 0, "price": 350 },
+  { "slug": "product-6", "name": "product 6", "available": true, "amount": 1, "price": 75 }
 ]

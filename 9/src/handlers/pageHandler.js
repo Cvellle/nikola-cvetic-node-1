@@ -13,6 +13,7 @@ const pages = {
       age: 30,
       height: 185,
       weight: 85,
+      products: require(path.join(dataDir, "products.json")),
     }),
   },
   "/news": {
@@ -76,4 +77,15 @@ function handlePage(req, res) {
   return render(res, 200, page.view, page.data());
 }
 
-module.exports = handlePage;
+function handleProduct(req, res, slug) {
+  const products = require(path.join(dataDir, "products.json"));
+  const product = products.find((product) => product.slug === slug);
+
+  if (!product) {
+    return render(res, 404, "404.ejs", { title: "Not found", url: req.url });
+  }
+
+  return render(res, 200, "product.ejs", { title: product.name, product });
+}
+
+module.exports = { handlePage, handleProduct };

@@ -12,3 +12,21 @@
 <% } else { %>
   <p>You are a senior.</p>
 <% } %>
+
+<h2>Products</h2>
+<ul>
+  <% products.forEach((product) => { %>
+    <li>
+      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+      - <%= product.price.toFixed(2) %> RSD
+
+      <% if (product.amount === 0) { %>
+        - out of stock
+      <% } else if (product.amount < 5) { %>
+        - only <%= product.amount %> left!
+      <% } else { %>
+        - in stock (<%= product.amount %>)
+      <% } %>
+    </li>
+  <% }) %>
+</ul>
