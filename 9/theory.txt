@@ -1,0 +1,7 @@
+uvek return
+return res.end()
+regex
+^ pocinje
+req.url.match(/^\/product\([\w]+)$/)
+[\w]+ a-z, A-Z
++ da ih ima vise
