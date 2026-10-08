@@ -1,0 +1,13 @@
+<h1>About</h1>
+<p>This is a <%= course %> project.</p>
+
+<h2>Topics</h2>
+<% if (topics.length > 0) { %>
+  <ul>
+    <% topics.forEach((topic) => { %>
+      <li><%= topic %></li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No topics yet.</p>
+<% } %>
