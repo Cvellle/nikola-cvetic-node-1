@@ -66,15 +66,26 @@ function render(res, status, view, data) {
   });
 }
 
-function handlePage(req, res) {
-  const pathname = new URL(req.url, "http://localhost").pathname;
-  const page = pages[pathname];
+function getPathname(req) {
+  return new URL(req.url, "http://localhost").pathname;
+}
 
-  if (!page) {
-    return render(res, 404, "404.ejs", { title: "Not found", url: pathname });
-  }
+// da li postoji stranica za ovaj url ("/", "/news", "/products")
+function isPage(req) {
+  return Boolean(pages[getPathname(req)]);
+}
+
+function handlePage(req, res) {
+  const page = pages[getPathname(req)];
 
   return render(res, 200, page.view, page.data());
+}
+
+function handleNotFound(req, res) {
+  return render(res, 404, "404.ejs", {
+    title: "Not found",
+    url: getPathname(req),
+  });
 }
 
 function handleProduct(req, res, slug) {
@@ -82,10 +93,24 @@ function handleProduct(req, res, slug) {
   const product = products.find((product) => product.slug === slug);
 
   if (!product) {
-    return render(res, 404, "404.ejs", { title: "Not found", url: req.url });
+    return handleNotFound(req, res);
   }
 
   return render(res, 200, "product.ejs", { title: product.name, product });
 }
 
-module.exports = { handlePage, handleProduct };
+function handleAboutPage(req, res) {
+  return render(res, 200, "about.ejs", {
+    title: "About",
+    course: "Node.js kurs",
+    topics: ["http module", "event emitters", "ejs templates"],
+  });
+}
+
+module.exports = {
+  isPage,
+  handlePage,
+  handleProduct,
+  handleAboutPage,
+  handleNotFound,
+};
