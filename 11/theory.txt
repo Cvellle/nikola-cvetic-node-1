@@ -1,0 +1,2 @@
+return u ifu za validaciju, event loop, 
+da ne vrati headere pre zavrsetka async
