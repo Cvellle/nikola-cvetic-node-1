@@ -1,0 +1,32 @@
+<% if (name) { %>
+  <h1>Hello my name is: <%= name %></h1>
+<% } else { %>
+  <h1>Hello stranger</h1>
+<% } %>
+
+<p>age: <%= age %></p>
+<% if (age < 18) { %>
+  <p>You are underage.</p>
+<% } else if (age < 65) { %>
+  <p>You are an adult.</p>
+<% } else { %>
+  <p>You are a senior.</p>
+<% } %>
+
+<h2>Products</h2>
+<ul>
+  <% products.forEach((product) => { %>
+    <li>
+      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+      - <%= product.price.toFixed(2) %> RSD
+
+      <% if (product.amount === 0) { %>
+        - out of stock
+      <% } else if (product.amount < 5) { %>
+        - only <%= product.amount %> left!
+      <% } else { %>
+        - in stock (<%= product.amount %>)
+      <% } %>
+    </li>
+  <% }) %>
+</ul>

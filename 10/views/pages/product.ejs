@@ -1,0 +1,11 @@
+<h1><%= product.name %></h1>
+<p>price: <%= product.price.toFixed(2) %> RSD</p>
+<p>amount: <%= product.amount %></p>
+
+<% if (product.available && product.amount > 0) { %>
+  <p>Available</p>
+<% } else { %>
+  <p>Not available</p>
+<% } %>
+
+<a href="/">Back to home</a>
