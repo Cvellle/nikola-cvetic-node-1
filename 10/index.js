@@ -1,88 +1,34 @@
 const http = require("http");
 
-const news = require("./data/news.json");
+const handleStaticFiles = require("./src/handlers/staticHandler");
+const handleApiCall = require("./src/handlers/apiHandler");
+const {
+  isPage,
+  handlePage,
+  handleProduct,
+  handleAboutPage,
+  handleNotFound,
+} = require("./src/handlers/pageHandler");
 
 const server = http.createServer((req, res) => {
-  // Streaming
-  // samo prikupljanje podataka,
-  // mora imati req.on("end") da bi se prikazali
-  // paralelno prima sve podatke, ne ceka sve chunkove odjednom
-  let body = "";
-  req.on("data", (chunk) => {
-    body += chunk.toString();
-  });
+  // /product/product-1 -> slug = "product-1"
+  const productMatch = req.url.match(/^\/product\/([\w-]+)$/);
 
-  req.on("end", () => {
-    const data = JSON.parse(body);
-    if (
-      !data.name.hasOwnProperty("email") ||
-      !data.name.hasOwnProperty("password")
-    ) {
-      res.statusCode = 400;
-      // mora unutar da se ne bi pregazio sa sledecim
-      // zavrsi zahtev u ifu, a a ko ne udje, onda ispod zavrsi
-      res.end();
-    }
-    //
-    res.end();
-  });
-
-  // mora posle i
-  // res.end();
-
-  // [1, 2, 3, 4, 5, 6, 7, 8, 9] - prvo [1, 2, 3] pa [4, 5, 6] pa [7, 8] pa [9, 10]
-
-  // new URL(req.url, `base`);
-  const url = new URL(req.url, `http://${req.headers.host}`);
-
-  if (url.pathname === "/contact") {
-    res.writeHead(302, { Location: "/" });
-    res.end();
-    return;
-  }
-
-  if (url.pathname === "/") {
-    // Head
-    res.statusCode = 200; // OK
-
-    // Types
-    // Text, JSON, HTML, JavaScript, CSS, XML;
-    res.setHeader("Content-Type", "text/plain");
-
-    // Body
-    res.end("hello world");
-  } else if (url.pathname === "/news") {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    const title = url.searchParams.get("title");
-    const articleFound = news.find((article) => article.title === title);
-
-    const articlesHtml = articleFound
-      ? `<h1>${articleFound.title}</h1><p>${articleFound.content}</p>`
-      : news
-          .map(
-            (article) => `<h1>${article.title}</h1><p>${article.content}</p>`,
-          )
-          .join("");
-
-    // or in <head> charset="utf-8"
-    res.end(`
-      <html>
-        <head>
-          <meta charset="utf-8" />
-          <title>News</title>
-        </head>
-        <body>
-          ${articlesHtml}
-        </body>
-      </html>
-    `);
+  if (req.url.startsWith("/public/")) {
+    handleStaticFiles(req, res);
+  } else if (req.url.startsWith("/api/")) {
+    handleApiCall(req, res);
+  } else if (isPage(req)) {
+    handlePage(req, res);
+  } else if (req.url === "/about") {
+    handleAboutPage(req, res);
+  } else if (productMatch) {
+    handleProduct(req, res, productMatch[1]);
   } else {
-    res.statusCode = 404;
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.end("404 not found");
+    handleNotFound(req, res);
   }
 });
+
 server.listen(3000);
 
 console.log("Server is running at http://localhost:3000/");

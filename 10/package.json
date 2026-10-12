@@ -6,13 +6,15 @@
   "scripts": {
     "start": "node --env-file=.env index.js",
     "dev": "nodemon --exec \"node --env-file=.env\" index.js",
-    "insert-user": "node --env-file=.env src/insertUserExample.js"
+    "insert-user": "node --env-file=.env src/insertUserExample.js",
+    "setup-products": "node --env-file=.env src/setupProducts.js"
   },
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.14"
   },
   "dependencies": {
+    "ejs": "^7.0.1",
     "mysql2": "^3.24.5"
   }
 }

@@ -1,0 +1,3 @@
+// Real projects use a tool like
+// Knex, Sequelize, Prisma,
+// TypeORM or db-migrate
