@@ -1,0 +1,29 @@
+<h1>Register</h1>
+
+<% if (errors.length) { %>
+  <ul style="color: red">
+    <% errors.forEach((error) => { %>
+      <li><%= error %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form method="POST" action="/api/register">
+  <p>
+    <label for="name">Name</label><br />
+    <input type="text" id="name" name="name" value="<%= name %>" />
+  </p>
+  <p>
+    <label for="email">Email</label><br />
+    <input type="email" id="email" name="email" value="<%= email %>" />
+  </p>
+  <p>
+    <label for="password">Password</label><br />
+    <input type="password" id="password" name="password" />
+  </p>
+  <p>
+    <label for="confirm_password">Confirm password</label><br />
+    <input type="password" id="confirm_password" name="confirm_password" />
+  </p>
+  <button type="submit">Register</button>
+</form>

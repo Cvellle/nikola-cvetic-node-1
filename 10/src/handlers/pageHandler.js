@@ -25,7 +25,8 @@ function handlePage(page, data, req, res) {
         return;
       }
 
-      res.writeHead(page === "404" ? 404 : 200, { "Content-Type": "text/html" });
+      // status postavlja onaj ko poziva (res.statusCode = 404), inace je 200
+      res.writeHead(res.statusCode, { "Content-Type": "text/html" });
       res.end(html);
     });
   });

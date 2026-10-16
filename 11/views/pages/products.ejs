@@ -1,0 +1,31 @@
+<h1>Products</h1>
+<% if (products.length > 0) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach((product) => { %>
+        <tr>
+          <td><a href="/product/<%= product.slug %>"><%= product.name %></a></td>
+          <td><%= product.price.toFixed(2) %> RSD</td>
+          <td><%= product.amount %></td>
+          <td>
+            <% if (product.available && product.amount > 0) { %>
+              available
+            <% } else { %>
+              not available
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>No products yet.</p>
+<% } %>

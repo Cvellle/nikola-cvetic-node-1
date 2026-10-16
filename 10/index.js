@@ -56,9 +56,11 @@ const server = http.createServer(async (req, res) => {
       if (product) {
         handlePage("permalink", { title: product.name, product: product }, req, res);
       } else {
+        res.statusCode = 404;
         handlePage("404", { title: "Not found", url: req.url }, req, res);
       }
     } else {
+      res.statusCode = 404;
       handlePage("404", { title: "Not found", url: req.url }, req, res);
     }
   } catch (err) {
