@@ -1,0 +1,26 @@
+[
+    {
+        "name": "product 1",
+        "available": true
+    },
+    {
+        "name": "product 2",
+        "available": true
+    },
+    {
+        "name": "product 3",
+        "available": false
+    },
+    {
+        "name": "product 4",
+        "available": true
+    },
+    {
+        "name": "product 5",
+        "available": false
+    },
+    {
+        "name": "product 6",
+        "available": true
+    }
+]

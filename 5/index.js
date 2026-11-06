@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const logUsersVisit = require("../../src/logger");
+const logUsersVisit = require("./src/logger");
 
 const variables = {
   name: "Nikola",
@@ -12,17 +12,17 @@ const variables = {
 };
 
 const navigation = fs.readFileSync(
-  __dirname + "/../../html/components/navigation.html",
+  __dirname + "/components/navigation.html",
   "utf-8",
 );
 const footer = fs.readFileSync(
-  __dirname + "/../../html/components/footer.html",
+  __dirname + "/components/footer.html",
   "utf-8",
 );
 
 const server = http.createServer((req, res) => {
   if (req.url.startsWith("/public/js") && req.url.endsWith(".js")) {
-    const jsPath = path.join(__dirname, "/../../", req.url);
+    const jsPath = path.join(__dirname, req.url);
     fs.readFile(jsPath, (err, data) => {
       if (err) {
         res.writeHead(404, { "Content-Type": "text/plain" });
@@ -37,7 +37,7 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.url.startsWith("/api/products")) {
-    const filePath = path.join(__dirname, "/../../data", "products.json");
+    const filePath = path.join(__dirname, "data", "products.json");
     fs.readFile(filePath, "utf-8", (err, jsonResponse) => {
       if (err) {
         res.writeHead(404, { "Content-Type": "text/plain" });
@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  fs.readFile(__dirname + "/../../public/index.html", "utf-8", (err, html) => {
+  fs.readFile(__dirname + "/public/index.html", "utf-8", (err, html) => {
     if (err) {
       res.statusCode = 500;
       res.end("Internal server error");
